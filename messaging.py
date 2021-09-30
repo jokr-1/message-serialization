@@ -346,25 +346,3 @@ class MessageField(Field):
 
     def __str__(self):
         return self.msg_cls.__name__
-
-
-
-if __name__ == '__main__':
-    import timeit
-
-    @register(msg_type=b'test')
-    class MessageJson(Message):
-        records = ['json']
-
-    @register(msg_type=b'test-compr', compress=True)
-    class MessageJsonComp(Message):
-        records = ['json']
-
-    with open('../common/controller_config_default.json', encoding='latin1') as json_file:
-        data = json.load(json_file)
-
-    def test_json():
-        return MessageJson.serialize(records=[data])
-
-    def test_json_compr():
-        return MessageJsonComp.serialize(records=[data])
